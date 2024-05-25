@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:title=""
+        android:icon="@drawable/fluent__home_12_filled"
+        android:padding="0dp"
+        />
+    <item android:id="@+id/todo"
+        android:title=""
+        android:icon="@drawable/ion__calendar"
+        android:padding="0dp"
+        />
+    <item android:id="@+id/notes"
+        android:title=""
+        android:icon="@drawable/mage__file_2_fill"
+        android:padding="0dp"
+        />
+    <item android:id="@+id/list"
+        android:title=""
+        android:icon="@drawable/line_md__list_3_filled"
+        android:padding="0dp"
+        />
+</menu>
