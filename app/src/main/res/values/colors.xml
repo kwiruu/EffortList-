@@ -5,4 +5,5 @@
     <color name="colorSelected">#000000</color>
     <color name="colorNormal">#818181</color>
     <color name="offWhite">#f6f6f6</color>
+    <color name="yellow">#FEC347</color>
 </resources>
