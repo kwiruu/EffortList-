@@ -97,7 +97,7 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/addNewTodoButton"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/fab_background"

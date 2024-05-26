@@ -1,61 +1,72 @@
 package com.example.effortlist;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
+import com.example.effortlist.Utils.DatabaseHandler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class TodoFragment extends Fragment {
+public class TodoFragment extends Fragment implements DialogCloseListener {
     private RecyclerView recyclerView;
     private TodoAdapter todoAdapter;
     private List<TodoModel> todoList;
+    private DatabaseHandler db;
+    private Button addNewTodoButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
+        db = new DatabaseHandler(getActivity());
+        db.openDatabase();
         todoList = new ArrayList<>();
-        // Get the RecyclerView from the inflated view
         recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        todoAdapter = new TodoAdapter(this);
+        todoAdapter = new TodoAdapter(db, this);
         recyclerView.setAdapter(todoAdapter);
 
-        TodoModel todo = new TodoModel();
-        todo.setTodo("Finish OOP2 capstone gameover screen");
-        todo.setStatus(0);
-        todo.setId(1);
+        addNewTodoButton = view.findViewById(R.id.addNewTodoButton);
 
-        todoList.add(todo);
-        todoList.add(todo);
-        todoList.add(todo);
-        todoList.add(todo);
-        todoList.add(todo);
-
+        todoList = db.getAllTodo();
+        Collections.reverse(todoList);
         todoAdapter.setTodo(todoList);
-        // If you have an adapter, set it here
-        // recyclerView.setAdapter(new YourAdapter());
+
+        addNewTodoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewTodo.newInstance().show(getChildFragmentManager(), AddNewTodo.TAG);
+            }
+        });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(todoAdapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return view;
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void handleDialogClose(DialogInterface dialog) {
+        todoList = db.getAllTodo();
+        Collections.reverse(todoList);
+        todoAdapter.setTodo(todoList);
+        todoAdapter.notifyDataSetChanged();
     }
 }

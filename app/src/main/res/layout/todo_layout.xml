@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
     xmlns:tool="http://schemas.android.com/tools"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="8dp">
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="#00FFFFFF"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/task_box"
+        android:padding="15dp">
+
         <CheckBox
             android:id="@+id/todoCheckBox"
-            tool:text="Sample Todo to make for!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="8dp"
             android:buttonTint="#000000"
-            />
+            android:paddingStart="8dp"
+            tool:text="Sample Todo to make for!" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    android:padding="20dp"
+    android:paddingBottom="100dp">
 
     <EditText
-        android:id="@+id/newTaskText"
+        android:id="@+id/newTodoText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:fontFamily="@font/inter_medium"
-        android:hint="New Todo"
+        android:fontFamily="@font/inter_semibold"
+        android:hint="New todo"
         android:textColor="@color/black" />
 
     <Button
-        android:id="@+id/NewTaskButton"
+        android:id="@+id/newTodoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newTaskText"
-        android:textSize="16sp"
+        android:layout_below="@id/newTodoText"
         android:layout_alignParentEnd="true"
-        android:background="@android:color/transparent"
+        android:background="@drawable/fab_background"
+        android:fontFamily="@font/inter_semibold"
         android:text="Save"
         android:textAllCaps="false"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 </RelativeLayout>
