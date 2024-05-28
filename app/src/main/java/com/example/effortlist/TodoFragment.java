@@ -47,7 +47,7 @@ public class TodoFragment extends Fragment implements DialogCloseListener {
 
         todoList = db.getAllTodo();
         Collections.reverse(todoList);
-        todoAdapter.setTodo(todoList);
+        todoAdapter.setTodoList(todoList);
 
         addNewTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class TodoFragment extends Fragment implements DialogCloseListener {
     public void handleDialogClose(DialogInterface dialog) {
         todoList = db.getAllTodo();
         Collections.reverse(todoList);
-        todoAdapter.setTodo(todoList);
+        todoAdapter.setTodoList(todoList);
         todoAdapter.notifyDataSetChanged();
     }
 }

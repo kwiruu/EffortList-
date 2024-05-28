@@ -59,7 +59,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         return n != 0;
     }
 
-    public void setTodo(List<TodoModel> todoList) {
+    public void setTodoList(List<TodoModel> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged();
     }

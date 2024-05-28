@@ -49,7 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTodo(TodoModel task){
+    public void insertTodo(TodoModel task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTodo());
         cv.put(DATE, task.getDate()); // Add date field
@@ -57,28 +57,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TODO_TABLE, null, cv);
     }
 
-
-    public List<TodoModel> getAllTodo(){
+    public List<TodoModel> getAllTodo() {
         List<TodoModel> taskList = new ArrayList<>();
         Cursor cur = null;
         db.beginTransaction();
-        try{
+        try {
             cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
-            if(cur != null){
-                if(cur.moveToFirst()){
-                    do{
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
                         TodoModel task = new TodoModel();
                         task.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
                         task.setTodo(cur.getString(cur.getColumnIndexOrThrow(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
                         task.setDate(cur.getString(cur.getColumnIndexOrThrow(DATE))); // Add date field
                         taskList.add(task);
-                    }
-                    while(cur.moveToNext());
+                    } while (cur.moveToNext());
                 }
             }
-        }
-        finally {
+        } finally {
             db.endTransaction();
             assert cur != null;
             cur.close();
@@ -86,21 +83,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return taskList;
     }
 
-    public void updateStatus(int id, int status){
+    public void updateStatus(int id, int status) {
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
-        db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
     public void updateTodo(int id, String task, String date) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task);
         cv.put(DATE, date); // Add date field
-        db.update(TODO_TABLE, cv, ID + "= ?", new String[] {String.valueOf(id)});
+        db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
-
-    public void deleteTodo(int id){
-        db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
+    public void deleteTodo(int id) {
+        db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
     }
 }
