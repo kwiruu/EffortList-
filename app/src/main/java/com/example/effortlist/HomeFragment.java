@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
@@ -21,6 +22,9 @@ public class HomeFragment extends Fragment {
     private TodoAdapter recentTodoAdapter;
     private DatabaseHandler db;
     private List<TodoModel> recentTodos;
+    Button[] homeButtons = new Button[4];
+    Button[] arrTask;
+    Button[] arrTaskDelete;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,5 +42,21 @@ public class HomeFragment extends Fragment {
         recentTodosRecyclerView.setAdapter(recentTodoAdapter);
 
         return view;
+    }
+
+    void functions() {
+        for (int i = 0; i < 4; i++) {
+            homeButtons[i].setOnClickListener(v -> {
+
+            });
+        }
+        for (int i = 0; i < 10; i++) {
+            arrTask[i].setOnClickListener(v -> {
+
+            });
+            arrTaskDelete[i].setOnClickListener(v -> {
+
+            });
+        }
     }
 }

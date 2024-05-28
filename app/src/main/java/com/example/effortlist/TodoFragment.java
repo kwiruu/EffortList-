@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
@@ -52,6 +53,7 @@ public class TodoFragment extends Fragment implements DialogCloseListener {
         addNewTodoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("thing pressed");
                 AddNewTodo.newInstance().show(getChildFragmentManager(), AddNewTodo.TAG);
             }
         });
