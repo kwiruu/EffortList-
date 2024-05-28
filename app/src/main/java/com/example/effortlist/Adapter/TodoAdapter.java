@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +42,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         TodoModel item = todoList.get(position);
         holder.task.setText(item.getTodo());
         holder.task.setChecked(toBoolean(item.getStatus()));
+        holder.date.setText(item.getDate()); // Set date
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -72,6 +74,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         bundle.putString("task", item.getTodo());
+        bundle.putString("date", item.getDate()); // Add date
         AddNewTodo fragment = new AddNewTodo();
         fragment.setArguments(bundle);
         fragment.show(activity.getChildFragmentManager(), AddNewTodo.TAG);
@@ -90,10 +93,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox task;
+        TextView date; // New date TextView
 
         ViewHolder(View view) {
             super(view);
             task = view.findViewById(R.id.todoCheckBox);
+            date = view.findViewById(R.id.todoDate); // Initialize date TextView
         }
     }
 }

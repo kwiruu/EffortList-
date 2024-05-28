@@ -23,6 +23,20 @@
             android:buttonTint="#000000"
             android:paddingStart="8dp"
             tool:text="Sample Todo to make for!" />
+
+        <TextView
+            android:id="@+id/todoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="37dp"
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/todoCheckBox"
+            android:paddingTop="7dp"
+            android:text="Date"
+            android:textAlignment="textEnd"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 

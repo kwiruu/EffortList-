@@ -1,7 +1,7 @@
 package com.example.effortlist;
 
-
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,13 @@ import com.example.effortlist.Model.TodoModel;
 import com.example.effortlist.Utils.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.Calendar;
+
 public class AddNewTodo extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
+    private EditText newTaskDate;
     private Button newTaskSaveButton;
 
     private DatabaseHandler db;
@@ -55,6 +59,7 @@ public class AddNewTodo extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newTaskText = requireView().findViewById(R.id.newTodoText);
+        newTaskDate = requireView().findViewById(R.id.newTodoDate);
         newTaskSaveButton = getView().findViewById(R.id.newTodoButton);
 
         boolean isUpdate = false;
@@ -63,9 +68,10 @@ public class AddNewTodo extends BottomSheetDialogFragment {
         if(bundle != null){
             isUpdate = true;
             String task = bundle.getString("task");
+            String date = bundle.getString("date");
             newTaskText.setText(task);
-            assert task != null;
-            if(task.length()>0)
+            newTaskDate.setText(date);
+            if(task != null && task.length() > 0)
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
         }
 
@@ -94,23 +100,49 @@ public class AddNewTodo extends BottomSheetDialogFragment {
             }
         });
 
+        newTaskDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
         final boolean finalIsUpdate = isUpdate;
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = newTaskText.getText().toString();
+                String date = newTaskDate.getText().toString();
                 if(finalIsUpdate){
-                    db.updateTodo(bundle.getInt("id"), text);
+                    db.updateTodo(bundle.getInt("id"), text, date);
                 }
                 else {
                     TodoModel task = new TodoModel();
                     task.setTodo(text);
+                    task.setDate(date);
                     task.setStatus(0);
                     db.insertTodo(task);
                 }
                 dismiss();
             }
         });
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                newTaskDate.setText(date);
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
     }
 
     @Override

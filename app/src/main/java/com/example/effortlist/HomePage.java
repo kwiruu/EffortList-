@@ -33,7 +33,6 @@ public class HomePage extends AppCompatActivity {
 
         replaceFragment(new HomeFragment(), true);
 
-
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
