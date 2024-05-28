@@ -12,31 +12,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/task_box"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
         <CheckBox
-            android:id="@+id/todoCheckBox"
-            android:layout_width="wrap_content"
+            android:id="@+id/listCheckBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="8dp"
             tool:text="Sample Todo to make for!" />
-
-        <TextView
-            android:id="@+id/todoDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="37dp"
-            android:layout_marginEnd="0dp"
-            android:layout_toEndOf="@+id/todoCheckBox"
-            android:paddingTop="7dp"
-            android:text="Date"
-            android:textAlignment="textEnd"
-            android:textSize="14sp" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
