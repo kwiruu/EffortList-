@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    android:padding="20dp"
+    android:paddingBottom="100dp">
+
+    <EditText
+        android:id="@+id/newListText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:fontFamily="@font/inter_semibold"
+        android:hint="New Item"
+        android:textColor="@color/black" />
+
+    <!-- Add date input -->
+
+    <Button
+        android:id="@+id/newListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newListText"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/fab_background"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+</RelativeLayout>

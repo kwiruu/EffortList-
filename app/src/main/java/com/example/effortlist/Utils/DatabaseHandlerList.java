@@ -6,29 +6,27 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.effortlist.Model.TodoModel;
+import com.example.effortlist.Model.ListModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHandlerList extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static final String NAME = "toDoListDatabase";
-    private static final String TODO_TABLE = "todo";
+    private static final String NAME = "shoppingListDatabase";
+    private static final String LIST_TABLE = "list";
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
-    private static final String DATE = "date"; // New date field
-    private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "("
+    private static final String CREATE_TODO_TABLE = "CREATE TABLE " + LIST_TABLE + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TASK + " TEXT, "
-            + STATUS + " INTEGER, "
-            + DATE + " TEXT)"; // Add date field to table creation statement
+            + STATUS + " INTEGER)"; // Add date field to table creation statement
 
     private SQLiteDatabase db;
 
-    public DatabaseHandler(Context context) {
+    public DatabaseHandlerList(Context context) {
         super(context, NAME, null, VERSION);
     }
 
@@ -40,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + LIST_TABLE);
         // Create tables again
         onCreate(db);
     }
@@ -49,54 +47,61 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public void insertTodo(TodoModel task) {
+    public void insertTodo(ListModel task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTodo());
-        cv.put(DATE, task.getDate()); // Add date field
         cv.put(STATUS, 0);
-        db.insert(TODO_TABLE, null, cv);
+        db.insert(LIST_TABLE, null, cv);
     }
 
-    public List<TodoModel> getAllTodo() {
-        List<TodoModel> taskList = new ArrayList<>();
+    public List<ListModel> getAllTodo() {
+        List<ListModel> taskList = new ArrayList<>();
         Cursor cur = null;
         db.beginTransaction();
         try {
-            cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
+            // Query to get all tasks ordered by status
+            cur = db.query(LIST_TABLE, null, null, null, null, null, STATUS + " ASC", null);
             if (cur != null) {
                 if (cur.moveToFirst()) {
                     do {
-                        TodoModel task = new TodoModel();
+                        ListModel task = new ListModel();
                         task.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
                         task.setTodo(cur.getString(cur.getColumnIndexOrThrow(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
-                        task.setDate(cur.getString(cur.getColumnIndexOrThrow(DATE))); // Add date field
                         taskList.add(task);
                     } while (cur.moveToNext());
                 }
             }
         } finally {
             db.endTransaction();
-            assert cur != null;
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
         }
         return taskList;
     }
 
-    public void updateStatus(int id, int status) {
+
+    public List<ListModel> updateStatus(int id, int status) {
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
-        db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+        db.update(LIST_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+        return getAllTodo(); // Return the updated list
     }
 
-    public void updateTodo(int id, String task, String date) {
+
+    public void updateTodo(int id, String task) {
         ContentValues cv = new ContentValues();
         cv.put(TASK, task);
-        cv.put(DATE, date); // Add date field
-        db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+        db.update(LIST_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
+
     public void deleteTodo(int id) {
-        db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
+        db.delete(LIST_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
+    }
+
+    public void deleteAllTodos() {
+        db.delete(LIST_TABLE, null, null); // Delete all rows
     }
 }
