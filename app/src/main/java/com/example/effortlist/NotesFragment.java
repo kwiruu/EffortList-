@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class NotesFragment extends Fragment {
-    private RecyclerView recentTodosRecyclerView;
+    private RecyclerView recentNotesRecyclerView;
     Button newNote;
     Button[] arrNote;
     Button[] arrNoteDelete;
