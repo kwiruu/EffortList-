@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.effortlist.Model.ListModel;
+import com.example.effortlist.Model.NoteModel;
 import com.example.effortlist.Model.TodoModel;
 
 import java.util.ArrayList;
@@ -174,7 +175,32 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(STATUS, 0);
         db.insert(LIST_TABLE, null, cv);
     }
-
+    public List<NoteModel> getAllNoteItems() {
+        List<NoteModel> itemList = new ArrayList<>();
+        Cursor cur = null;
+        db.beginTransaction();
+        try {
+            // Query to get all items ordered by status
+            cur = db.query(LIST_TABLE, null, null, null, null, null, STATUS + " ASC", null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
+                        NoteModel item = new NoteModel();
+                        item.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
+                        item.setTodo(cur.getString(cur.getColumnIndexOrThrow(TASK)));
+                        item.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
+                        itemList.add(item);
+                    } while (cur.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return itemList;
+    }
     public List<ListModel> getAllShoppingItems() {
         List<ListModel> itemList = new ArrayList<>();
         Cursor cur = null;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,7 @@ public class HomePage extends AppCompatActivity {
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Toast.makeText(HomePage.this, "wow", Toast.LENGTH_SHORT).show();
 
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.home) {
