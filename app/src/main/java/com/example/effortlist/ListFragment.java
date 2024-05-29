@@ -15,7 +15,6 @@ import android.widget.Button;
 
 import com.example.effortlist.Adapter.ListAdapter;
 import com.example.effortlist.Model.ListModel;
-import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private List<ListModel> shoppingList;
-    private DBHelper db;
+    private DatabaseHandlerList db;
     private Button addNewListButton;
     private Button deleteAllButton;  // New button for deleting all data
     Button newList;
@@ -38,10 +37,10 @@ public class ListFragment extends Fragment implements DialogCloseListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        db = new DBHelper(getActivity());
+        db = new DatabaseHandlerList(getActivity());
         db.openDatabase();
         shoppingList = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView = view.findViewById(R.id.taskRecyclerView1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         listAdapter = new ListAdapter(db, this);
@@ -91,17 +90,4 @@ public class ListFragment extends Fragment implements DialogCloseListener {
         listAdapter.notifyDataSetChanged();
     }
 
-    void functions() {
-        newList.setOnClickListener(v -> {
-
-        });
-        for (int i = 0; i < 10; i++) {
-            arrList[i].setOnClickListener(v -> {
-
-            });
-            arrListDelete[i].setOnClickListener(v -> {
-
-            });
-        }
-    }
 }

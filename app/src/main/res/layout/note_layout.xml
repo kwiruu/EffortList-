@@ -14,14 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/listCheckBox"
+        <TextView
+            android:id="@+id/noteTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:buttonTint="#000000"
             android:fontFamily="@font/inter_semibold"
             android:paddingStart="8dp"
-            tool:text="Sample Todo to make for!" />
+            android:text="Sample Todo to make for!"
+            android:textColor="#000000" />
+
+
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

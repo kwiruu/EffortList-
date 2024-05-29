@@ -25,6 +25,8 @@ import com.example.effortlist.Utils.DatabaseHandler;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Calendar;
 
 public class AddNewList extends BottomSheetDialogFragment {
@@ -35,6 +37,8 @@ public class AddNewList extends BottomSheetDialogFragment {
 
     private DatabaseHandlerList db;
 
+    @NonNull
+    @Contract(" -> new")
     public static AddNewList newInstance(){
         return new AddNewList();
     }

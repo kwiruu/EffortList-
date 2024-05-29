@@ -14,7 +14,6 @@ import com.example.effortlist.AddNewTodo;
 import com.example.effortlist.ListFragment;
 import com.example.effortlist.Model.ListModel;
 import com.example.effortlist.R;
-import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
 import java.util.Collections;
@@ -24,9 +23,9 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<ListModel> listmodel;
     private ListFragment activity;
-    private DBHelper db;
+    private DatabaseHandlerList db;
 
-    public ListAdapter(DBHelper db, ListFragment activity) {
+    public ListAdapter(DatabaseHandlerList db, ListFragment activity) {
         this.db = db;
         this.activity = activity;
     }

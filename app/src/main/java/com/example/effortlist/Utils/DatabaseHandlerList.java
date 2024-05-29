@@ -81,6 +81,38 @@ public class DatabaseHandlerList extends SQLiteOpenHelper {
         return taskList;
     }
 
+    public List<ListModel> getAllShoppingItems() {
+        List<ListModel> itemList = new ArrayList<>();
+        Cursor cur = null;
+        db.beginTransaction();
+        try {
+            // Query to get all items ordered by status
+            cur = db.query(LIST_TABLE, null, null, null, null, null, STATUS + " ASC", null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
+                        ListModel item = new ListModel();
+                        item.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
+                        item.setTodo(cur.getString(cur.getColumnIndexOrThrow(TASK)));
+                        item.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
+                        itemList.add(item);
+                    } while (cur.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return itemList;
+    }
+
+    public void deleteAllShoppingItems() {
+        db.delete(LIST_TABLE, null, null); // Delete all rows
+    }
+
+
 
     public List<ListModel> updateStatus(int id, int status) {
         ContentValues cv = new ContentValues();

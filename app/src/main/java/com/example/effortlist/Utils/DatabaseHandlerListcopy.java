@@ -12,7 +12,7 @@ import com.example.effortlist.Model.NoteModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandlerList extends SQLiteOpenHelper {
+public class DatabaseHandlerListcopy extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
     private static final String NAME = "shoppingListDatabase";
@@ -27,7 +27,7 @@ public class DatabaseHandlerList extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
-    public DatabaseHandlerList(Context context) {
+    public DatabaseHandlerListcopy(Context context) {
         super(context, NAME, null, VERSION);
     }
 

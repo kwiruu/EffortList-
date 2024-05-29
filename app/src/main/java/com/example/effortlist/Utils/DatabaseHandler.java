@@ -46,10 +46,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void openDatabase() {
-        db = this.getWritableDatabase();
+        if (db == null || !db.isOpen()) {
+            db = this.getWritableDatabase();
+        }
     }
 
     public void insertTodo(TodoModel task) {
+        openDatabase(); // Ensure database is open before operation
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTodo());
         cv.put(DATE, task.getDate()); // Add date field
@@ -58,6 +61,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<TodoModel> getAllTodo() {
+        openDatabase(); // Ensure database is open before operation
         List<TodoModel> taskList = new ArrayList<>();
         Cursor cur = null;
         db.beginTransaction();
@@ -77,19 +81,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
         } finally {
             db.endTransaction();
-            assert cur != null;
-            cur.close();
+            if (cur != null) {
+                cur.close();
+            }
         }
         return taskList;
     }
 
     public void updateStatus(int id, int status) {
+        openDatabase(); // Ensure database is open before operation
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
         db.update(TODO_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
     }
 
     public void updateTodo(int id, String task, String date) {
+        openDatabase(); // Ensure database is open before operation
         ContentValues cv = new ContentValues();
         cv.put(TASK, task);
         cv.put(DATE, date); // Add date field
@@ -97,6 +104,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void deleteTodo(int id) {
+        openDatabase(); // Ensure database is open before operation
         db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
     }
 }

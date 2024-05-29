@@ -19,7 +19,6 @@ import com.example.effortlist.Adapter.ListAdapter;
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
 import com.example.effortlist.Model.ListModel;
-import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandler;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
@@ -30,7 +29,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView recentShoppingRecyclerView;
     private TodoAdapter recentTodoAdapter;
     private ListAdapter recentShoppingAdapter; // Use TodoAdapter for simplicity
-    private DBHelper db;
+    private DatabaseHandlerList db;
+    private DatabaseHandler db1;
     private List<TodoModel> recentTodos;
     Button[] homeButtons = new Button[4];
     Button[] arrTask;
@@ -40,12 +40,15 @@ public class HomeFragment extends Fragment {
     private TextView numberOfTodoTV;
     private TextView numberOfItemTV;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        db = new DBHelper(getActivity());
+        db = new DatabaseHandlerList(getActivity());
         db.openDatabase();
+
+        db1 = new DatabaseHandler((getActivity()));
 
 
         recentTodosRecyclerView = view.findViewById(R.id.recentTodosRecyclerView);
@@ -57,12 +60,12 @@ public class HomeFragment extends Fragment {
         numberOfTodoTV = view.findViewById(R.id.numberOfTodoTV);
         numberOfItemTV = view.findViewById(R.id.numberOfItemTV);
 
-        recentTodos = getRecentItemz(db.getAllTodo());
+        recentTodos = getRecentItemz(db1.getAllTodo());
         recentShopping = getRecentItems(db.getAllShoppingItems());
 
         updateCounts();
 
-        recentTodoAdapter = new TodoAdapter(db, null); // Passing null for the fragment as it's not used here
+        recentTodoAdapter = new TodoAdapter(db1, null); // Passing null for the fragment as it's not used here
         recentTodoAdapter.setTodoList(recentTodos);
         recentTodosRecyclerView.setAdapter(recentTodoAdapter);
 

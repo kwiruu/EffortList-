@@ -7,65 +7,43 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.effortlist.AddNewTodo;
-import com.example.effortlist.ListFragment;
-import com.example.effortlist.Model.ListModel;
 import com.example.effortlist.Model.NoteModel;
+import com.example.effortlist.NotesFragment;
 import com.example.effortlist.R;
-import com.example.effortlist.Utils.DBHelper;
+import com.example.effortlist.Utils.DatabaseHandlerNote;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class NotesAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private List<NoteModel> noteModel;
-    private ListFragment activity;
-    private DBHelper db;
+    private NotesFragment activity;
+    private DatabaseHandlerNote db;
 
-    public NotesAdapter(DBHelper db, ListFragment activity) {
+    public NotesAdapter(DatabaseHandlerNote db, NotesFragment activity) {
         this.db = db;
         this.activity = activity;
     }
 
     @Override
-    public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_layout, parent, false);
-        return new ListAdapter.ViewHolder(itemView);
+                .inflate(R.layout.note_layout, parent, false);
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         NoteModel item = noteModel.get(position);
-        holder.task.setText(item.getTodo());
-        holder.task.setChecked(toBoolean(item.getStatus()));
-        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isPressed()) {
-                    int newStatus = b ? 1 : 0;
-                    db.updateStatus(item.getId(), newStatus);
-                    refreshList();
-                }
-            }
-        });
+        holder.task.setText(item.getTITLE());
     }
-
-    private void refreshList() {
-        noteModel = db.getAllNoteItems();
-        Collections.sort(noteModel, new Comparator<NoteModel>() {
-            @Override
-            public int compare(NoteModel o1, NoteModel o2) {
-                return Integer.compare(o1.getStatus(), o2.getStatus());
-            }
-        });
-        notifyDataSetChanged();
-    }
-
 
 
     private boolean toBoolean(int n) {
@@ -86,8 +64,8 @@ public class NotesAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         NoteModel item = noteModel.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
-        bundle.putString("task", item.getTodo());
-        bundle.putString("date", item.getDate()); // Add date
+        bundle.putString("title", item.getTITLE());
+        bundle.putString("content", item.getTEXT()); // Add date
         AddNewTodo fragment = new AddNewTodo();
         fragment.setArguments(bundle);
         fragment.show(activity.getChildFragmentManager(), AddNewTodo.TAG);
@@ -105,11 +83,11 @@ public class NotesAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        CheckBox task;
+        TextView task;
 
         ViewHolder(View view) {
             super(view);
-            task = view.findViewById(R.id.listCheckBox);
+            task = view.findViewById(R.id.noteTv);
         }
     }
 }

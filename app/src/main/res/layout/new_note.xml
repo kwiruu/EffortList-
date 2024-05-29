@@ -7,21 +7,32 @@
     android:paddingBottom="100dp">
 
     <EditText
-        android:id="@+id/newListText"
+        android:id="@+id/newNoteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
         android:fontFamily="@font/inter_semibold"
-        android:hint="New Item"
+        android:hint="New Title"
         android:textColor="@color/black" />
 
     <!-- Add date input -->
 
+    <EditText
+        android:id="@+id/newNoteText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/newNoteText"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:fontFamily="@font/inter_semibold"
+        android:hint="Your Text"
+        android:textColor="@color/black" />
+
     <Button
-        android:id="@+id/newListButton"
+        android:id="@+id/newNoteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newListText"
+        android:layout_below="@id/newNoteText"
         android:layout_alignParentEnd="true"
         android:background="@drawable/fab_background"
         android:fontFamily="@font/inter_semibold"

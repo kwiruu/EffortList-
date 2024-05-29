@@ -1,7 +1,7 @@
 package com.example.effortlist;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,31 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.example.effortlist.Model.ListModel;
-import com.example.effortlist.Model.TodoModel;
-import com.example.effortlist.Utils.DatabaseHandler;
+import com.example.effortlist.Model.NoteModel;
 import com.example.effortlist.Utils.DatabaseHandlerList;
+import com.example.effortlist.Utils.DatabaseHandlerNote;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.Calendar;
-
-public class AddNewList extends BottomSheetDialogFragment {
+public class AddNewNote extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
-    private EditText newTaskText;
+    private EditText newNoteTitleText, newNoteText;
     private Button newTaskSaveButton;
 
-    private DatabaseHandlerList db;
+    private DatabaseHandlerNote db;
 
-    public static AddNewList newInstance(){
-        return new AddNewList();
+    public static AddNewNote newInstance(){
+        return new AddNewNote();
     }
 
     @Override
@@ -50,7 +46,7 @@ public class AddNewList extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.new_list, container, false);
+        View view = inflater.inflate(R.layout.new_note, container, false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return view;
@@ -59,8 +55,10 @@ public class AddNewList extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        newTaskText = requireView().findViewById(R.id.newListText);
-        newTaskSaveButton = getView().findViewById(R.id.newListButton);
+        newNoteTitleText = requireView().findViewById(R.id.newNoteText);
+        newNoteText = requireView().findViewById(R.id.newNoteText2);
+
+        newTaskSaveButton = getView().findViewById(R.id.newNoteButton);
 
         boolean isUpdate = false;
 
@@ -68,15 +66,15 @@ public class AddNewList extends BottomSheetDialogFragment {
         if(bundle != null){
             isUpdate = true;
             String task = bundle.getString("task");
-            newTaskText.setText(task);
+            newNoteTitleText.setText(task);
             if(task != null && task.length() > 0)
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
         }
 
-        db = new DatabaseHandlerList(getActivity());
+        db = new DatabaseHandlerNote(getActivity());
         db.openDatabase();
 
-        newTaskText.addTextChangedListener(new TextWatcher() {
+        newNoteTitleText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -102,20 +100,22 @@ public class AddNewList extends BottomSheetDialogFragment {
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = newTaskText.getText().toString();
+                String titletext = newNoteTitleText.getText().toString();
+                String text = newNoteTitleText.getText().toString();
                 if(finalIsUpdate){
-                    db.updateTodo(bundle.getInt("id"), text);
+                    db.updateTodo(bundle.getInt("id"), titletext,text);
                 }
                 else {
-                    ListModel task = new ListModel();
-                    task.setTodo(text);
-                    task.setStatus(0);
-                    db.insertTodo(task);
+                    NoteModel task = new NoteModel();
+                    task.setTITLE(titletext);
+                    task.setTEXT(text);
+                    db.insertNote(task,titletext,text);
                 }
                 dismiss();
             }
         });
     }
+
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog){

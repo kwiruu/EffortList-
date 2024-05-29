@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.effortlist.Utils.DBHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -20,7 +19,6 @@ public class HomePage extends AppCompatActivity {
     private BottomNavigationView bottomNavigation;
     private FrameLayout frameLayout;
     TextView usernameTv;
-    DBHelper dbHelper = new DBHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +28,11 @@ public class HomePage extends AppCompatActivity {
         frameLayout = findViewById(R.id.frameLayout);
         usernameTv = findViewById(R.id.usernameTv);
         // no idea how this works
-        if (dbHelper.getUsername() != null) {
-            usernameTv.setText(dbHelper.getUsername());
-        }
         replaceFragment(new HomeFragment(), true);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Toast.makeText(HomePage.this, "wow", Toast.LENGTH_SHORT).show();
-
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.home) {
                     replaceFragment(new HomeFragment(), false);
