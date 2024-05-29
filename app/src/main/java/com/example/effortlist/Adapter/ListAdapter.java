@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +14,7 @@ import com.example.effortlist.AddNewTodo;
 import com.example.effortlist.ListFragment;
 import com.example.effortlist.Model.ListModel;
 import com.example.effortlist.R;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
 import java.util.Collections;
@@ -24,9 +24,9 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private List<ListModel> listmodel;
     private ListFragment activity;
-    private DatabaseHandlerList db;
+    private DBHelper db;
 
-    public ListAdapter(DatabaseHandlerList db, ListFragment activity) {
+    public ListAdapter(DBHelper db, ListFragment activity) {
         this.db = db;
         this.activity = activity;
     }
@@ -56,7 +56,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     private void refreshList() {
-        listmodel = db.getAllTodo();
+        listmodel = db.getAllShoppingItems();
         Collections.sort(listmodel, new Comparator<ListModel>() {
             @Override
             public int compare(ListModel o1, ListModel o2) {

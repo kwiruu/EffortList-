@@ -15,6 +15,7 @@ import com.example.effortlist.AddNewTodo;
 import com.example.effortlist.Model.TodoModel;
 import com.example.effortlist.R;
 import com.example.effortlist.TodoFragment;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandler;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import java.util.List;
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     private List<TodoModel> todoList;
     private TodoFragment activity;
-    private DatabaseHandler db;
+    private DBHelper db;
 
-    public TodoAdapter(DatabaseHandler db, TodoFragment activity) {
+    public TodoAdapter(DBHelper db, TodoFragment activity) {
         this.db = db;
         this.activity = activity;
     }

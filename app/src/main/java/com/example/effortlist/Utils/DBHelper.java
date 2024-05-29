@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.effortlist.Model.ListModel;
 import com.example.effortlist.Model.TodoModel;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String listTASK = "task";
     private static final String listSTATUS = "status";
 
+    private SQLiteDatabase db;
+
     private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TASK + " TEXT, "
@@ -43,6 +46,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(@Nullable Context context) {
         super(context, DBname, null, 1);
+    }
+
+    public void openDatabase() {
+        db = this.getWritableDatabase();
     }
 
     @Override
@@ -159,5 +166,60 @@ public class DBHelper extends SQLiteOpenHelper {
     public void deleteTodo(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TODO_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
+    }
+
+    public void insertShoppingItem(ListModel item) {
+        ContentValues cv = new ContentValues();
+        cv.put(TASK, item.getTodo());
+        cv.put(STATUS, 0);
+        db.insert(LIST_TABLE, null, cv);
+    }
+
+    public List<ListModel> getAllShoppingItems() {
+        List<ListModel> itemList = new ArrayList<>();
+        Cursor cur = null;
+        db.beginTransaction();
+        try {
+            // Query to get all items ordered by status
+            cur = db.query(LIST_TABLE, null, null, null, null, null, STATUS + " ASC", null);
+            if (cur != null) {
+                if (cur.moveToFirst()) {
+                    do {
+                        ListModel item = new ListModel();
+                        item.setId(cur.getInt(cur.getColumnIndexOrThrow(ID)));
+                        item.setTodo(cur.getString(cur.getColumnIndexOrThrow(TASK)));
+                        item.setStatus(cur.getInt(cur.getColumnIndexOrThrow(STATUS)));
+                        itemList.add(item);
+                    } while (cur.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return itemList;
+    }
+
+    public List<ListModel> updateListStatus(int id, int status) {
+        ContentValues cv = new ContentValues();
+        cv.put(STATUS, status);
+        db.update(LIST_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+        return getAllShoppingItems(); // Return the updated list
+    }
+
+    public void updateShoppingItem(int id, String task) {
+        ContentValues cv = new ContentValues();
+        cv.put(TASK, task);
+        db.update(LIST_TABLE, cv, ID + "= ?", new String[]{String.valueOf(id)});
+    }
+
+    public void deleteShoppingItem(int id) {
+        db.delete(LIST_TABLE, ID + "= ?", new String[]{String.valueOf(id)});
+    }
+
+    public void deleteAllShoppingItems() {
+        db.delete(LIST_TABLE, null, null); // Delete all rows
     }
 }

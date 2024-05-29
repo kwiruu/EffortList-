@@ -34,9 +34,7 @@ public class AddNewTodo extends BottomSheetDialogFragment {
     private EditText newTaskText;
     private EditText newTaskDate;
     private Button newTaskSaveButton;
-
-    private DatabaseHandler db;
-    private DBHelper dbHelper;
+    private DBHelper db;
 
     @NonNull
     @Contract(" -> new")
@@ -81,7 +79,7 @@ public class AddNewTodo extends BottomSheetDialogFragment {
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
         }
 
-        db = new DatabaseHandler(getActivity());
+        db = new DBHelper(getActivity());
         db.openDatabase();
 
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -127,7 +125,7 @@ public class AddNewTodo extends BottomSheetDialogFragment {
                     task.setTodo(text);
                     task.setDate(date);
                     task.setStatus(0);
-                    dbHelper.insertTodo(task, dbHelper.getLoggedInUserID());
+                    db.insertTodo(task, db.getLoggedInUserID());
                 }
                 dismiss();
             }

@@ -19,6 +19,7 @@ import com.example.effortlist.Adapter.ListAdapter;
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
 import com.example.effortlist.Model.ListModel;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandler;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
@@ -29,8 +30,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recentShoppingRecyclerView;
     private TodoAdapter recentTodoAdapter;
     private ListAdapter recentShoppingAdapter; // Use TodoAdapter for simplicity
-    private DatabaseHandler db;
-    private DatabaseHandlerList dbList;
+    private DBHelper db;
     private List<TodoModel> recentTodos;
     Button[] homeButtons = new Button[4];
     Button[] arrTask;
@@ -44,11 +44,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        db = new DatabaseHandler(getActivity());
+        db = new DBHelper(getActivity());
         db.openDatabase();
 
-        dbList = new DatabaseHandlerList(getActivity());
-        dbList.openDatabase();
 
         recentTodosRecyclerView = view.findViewById(R.id.recentTodosRecyclerView);
         recentTodosRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -60,7 +58,7 @@ public class HomeFragment extends Fragment {
         numberOfItemTV = view.findViewById(R.id.numberOfItemTV);
 
         recentTodos = getRecentItemz(db.getAllTodo());
-        recentShopping = getRecentItems(dbList.getAllTodo());
+        recentShopping = getRecentItems(db.getAllShoppingItems());
 
         updateCounts();
 
@@ -68,7 +66,7 @@ public class HomeFragment extends Fragment {
         recentTodoAdapter.setTodoList(recentTodos);
         recentTodosRecyclerView.setAdapter(recentTodoAdapter);
 
-        recentShoppingAdapter = new ListAdapter(dbList, null); // Use TodoAdapter for simplicity
+        recentShoppingAdapter = new ListAdapter(db, null); // Use TodoAdapter for simplicity
         recentShoppingAdapter.setTodoList(recentShopping);
         recentShoppingRecyclerView.setAdapter(recentShoppingAdapter);
 

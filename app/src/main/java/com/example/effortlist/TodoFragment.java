@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.effortlist.Adapter.TodoAdapter;
 import com.example.effortlist.Model.TodoModel;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandler;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ public class TodoFragment extends Fragment implements DialogCloseListener {
     private RecyclerView recyclerView;
     private TodoAdapter todoAdapter;
     private List<TodoModel> todoList;
-    private DatabaseHandler db;
+    private DBHelper db;
     private Button addNewTodoButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
-        db = new DatabaseHandler(getActivity());
+        db = new DBHelper(getActivity());
         db.openDatabase();
         todoList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.taskRecyclerView);

@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.example.effortlist.Adapter.ListAdapter;
 import com.example.effortlist.Model.ListModel;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandlerList;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
     private RecyclerView recyclerView;
     private ListAdapter listAdapter;
     private List<ListModel> shoppingList;
-    private DatabaseHandlerList db;
+    private DBHelper db;
     private Button addNewListButton;
     private Button deleteAllButton;  // New button for deleting all data
     Button newList;
@@ -37,7 +38,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        db = new DatabaseHandlerList(getActivity());
+        db = new DBHelper(getActivity());
         db.openDatabase();
         shoppingList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.taskRecyclerView);
@@ -49,7 +50,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
         addNewListButton = view.findViewById(R.id.addNewListButton);
         deleteAllButton = view.findViewById(R.id.deleteAllButton); // Initialize the new button
 
-        shoppingList = db.getAllTodo();
+        shoppingList = db.getAllShoppingItems();
         Collections.reverse(shoppingList);
         listAdapter.setTodoList(shoppingList);
 
@@ -63,7 +64,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
         deleteAllButton.setOnClickListener(new View.OnClickListener() { // Set click listener for the new button
             @Override
             public void onClick(View v) {
-                db.deleteAllTodos(); // Call method to delete all todos
+                db.deleteAllShoppingItems(); // Call method to delete all todos
                 shoppingList.clear(); // Clear the list
                 listAdapter.setTodoList(shoppingList); // Update the adapter
                 listAdapter.notifyDataSetChanged(); // Notify the adapter
@@ -79,7 +80,7 @@ public class ListFragment extends Fragment implements DialogCloseListener {
     }
 
     private void refreshList() {
-        shoppingList = db.getAllTodo();
+        shoppingList = db.getAllShoppingItems();
         Collections.sort(shoppingList, new Comparator<ListModel>() {
             @Override
             public int compare(ListModel o1, ListModel o2) {
