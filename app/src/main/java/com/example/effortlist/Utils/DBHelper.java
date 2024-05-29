@@ -31,14 +31,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
 
-    private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "("
+    private static final String CREATE_TODO_TABLE = "CREATE TABLE IF NOT EXISTS " + TODO_TABLE + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TASK + " TEXT, "
             + STATUS + " INTEGER, "
             + DATE + " TEXT, "
             + userID + " INTEGER REFERENCES " + tblUser + "(" + userID + "))";
 
-    private static final String CREATE_LIST_TABLE = "CREATE TABLE " + LIST_TABLE + "("
+    private static final String CREATE_LIST_TABLE = "CREATE TABLE IF NOT EXISTS " + LIST_TABLE + "("
             + listID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + listTASK + " TEXT, "
             + listSTATUS + " INTEGER, "
@@ -67,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean inserData(String username, String email, String password, String fname, String lname, int isLogin) {
+    public boolean insertData(String username, String email, String password, String fname, String lname, int isLogin) {
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);

@@ -19,7 +19,9 @@
             <LinearLayout
                 android:layout_width="328dp"
                 android:layout_height="128dp"
+                android:gravity="bottom"
                 android:orientation="vertical"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,21 +29,24 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/dont_have_an_account" />
+                    android:text="@string/dont_have_an_account"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/create_your_account" />
+                    android:text="@string/create_your_account"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/it_s_quick_and_easy" />
+                    android:text="@string/it_s_quick_and_easy"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -53,7 +58,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,30 +91,30 @@
                 <EditText
                     android:id="@+id/editTextUsername"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:ems="10"
                     android:hint="username"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/editTextEmailaddress"
-                    android:layout_width="322dp"
-                    android:layout_height="46dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:ems="10"
                     android:hint="@string/e_mail_address"
                     android:inputType="textEmailAddress" />
 
                 <EditText
                     android:id="@+id/editTextPassword"
-                    android:layout_width="312dp"
-                    android:layout_height="47dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:ems="10"
                     android:hint="@string/create_your_password"
                     android:inputType="textPassword" />
 
                 <EditText
                     android:id="@+id/editTextConfirmpassword"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="51dp"
                     android:ems="10"
                     android:hint="@string/confirm_password"
@@ -112,14 +122,14 @@
 
                 <Button
                     android:id="@+id/btnSignup"
-                    android:layout_width="285dp"
-                    android:layout_height="47dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/sign_up" />
 
                 <Button
                     android:id="@+id/btnBack"
-                    android:layout_width="291dp"
-                    android:layout_height="43dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/back_to_sign_in" />
             </LinearLayout>
 
