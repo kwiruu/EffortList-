@@ -2,4 +2,25 @@
     <string name="app_name">EffortList</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="e_mail_address">E-mail Address</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="it_s_quick_and_easy">It\'s quick and easy.</string>
+    <string name="create_your_account">Create your Account</string>
+    <string name="dont_have_an_account">Dont Have an Account?</string>
+    <string name="create_your_password">Create your password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="back_to_sign_in">Back to Sign In</string>
+    <string name="hello_guest">Hello, Guest!</string>
+    <string name="welcome_to_effortlist">Welcome to Effortlist</string>
+    <string name="before_you_continue_please_sign_in_first">Before you continue, Please Sign in First.</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="tap_here_if_you_don_t_have_an_account">Tap here if you don\'t have an account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="hello">Hello!</string>
+    <string name="user_name">User name</string>
 </resources>

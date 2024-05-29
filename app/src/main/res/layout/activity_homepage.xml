@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="Hello!"
+                    android:text="@string/hello"
                     android:textColor="#A1A1A1"
                     android:textSize="12sp" />
 
@@ -56,7 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="User name"
+                    android:text="@string/user_name"
                     android:textColor="#000000"
                     android:textSize="12sp" />
 

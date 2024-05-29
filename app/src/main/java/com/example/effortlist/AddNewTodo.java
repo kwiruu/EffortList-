@@ -20,8 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.example.effortlist.Model.TodoModel;
+import com.example.effortlist.Utils.DBHelper;
 import com.example.effortlist.Utils.DatabaseHandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.Calendar;
 
@@ -33,7 +36,10 @@ public class AddNewTodo extends BottomSheetDialogFragment {
     private Button newTaskSaveButton;
 
     private DatabaseHandler db;
+    private DBHelper dbHelper;
 
+    @NonNull
+    @Contract(" -> new")
     public static AddNewTodo newInstance(){
         return new AddNewTodo();
     }
@@ -121,7 +127,7 @@ public class AddNewTodo extends BottomSheetDialogFragment {
                     task.setTodo(text);
                     task.setDate(date);
                     task.setStatus(0);
-                    db.insertTodo(task);
+                    dbHelper.insertTodo(task, dbHelper.getLoggedInUserID());
                 }
                 dismiss();
             }

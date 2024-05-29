@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EffortList"
         tools:targetApi="31">
-
         <activity
-            android:name=".SplashActivity"
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".LogIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +24,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".HomePage"/>
+        <activity
+            android:name=".SplashActivity"
+            android:exported="false">
+
+        </activity>
+        <activity android:name=".HomePage" />
 
         <meta-data
             android:name="preloaded_fonts"
